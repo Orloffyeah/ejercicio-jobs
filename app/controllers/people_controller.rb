@@ -30,6 +30,7 @@ class PeopleController < ApplicationController
       if @person.save
         format.html { redirect_to @person, notice: 'Person was successfully created.' }
         format.json { render :show, status: :created, location: @person }
+        WelcomeMailer.notify(@person).delivery_later!
       else
         format.html { render :new }
         format.json { render json: @person.errors, status: :unprocessable_entity }
